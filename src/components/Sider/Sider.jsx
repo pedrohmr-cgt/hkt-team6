@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Layout, Menu } from 'antd';
 
+import { GroupContext } from '../../context/group';
 import './Sider.scss';
 
 const { Sider: LytSider } = Layout;
 
 const Sider = () => {
+  const [groups] = useContext(GroupContext);
+
   return (
     <LytSider className="sider">
       <Menu theme="dark" mode="inline">
-        <Menu.Item key="1">Group 1</Menu.Item>
-        <Menu.Item key="2">Group 2</Menu.Item>
-        <Menu.Item key="3">Group 3</Menu.Item>
+        {groups.map(group => (
+          <Menu.Item key={`group-${group}`}>{group}</Menu.Item>
+        ))}
       </Menu>
     </LytSider>
   );

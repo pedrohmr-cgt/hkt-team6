@@ -1,7 +1,12 @@
 .sider {
   background: var(--secondary-color) !important;
+  padding-top: 1rem;
 
   .ant-menu-dark {
     background: var(--secondary-color) !important;
+
+    .ant-menu-item-selected {
+       background: var(--primary-color) !important;
+    }
   }
 }
