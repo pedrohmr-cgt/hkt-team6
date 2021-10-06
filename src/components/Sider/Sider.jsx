@@ -18,8 +18,7 @@ const Sider = () => {
   const [groups, selected, selectItem] = useContext(GroupContext);
 
   const loading = !groups || !selected;
-  // const preSelected = selected ? [`group-${selected.id}`] : null;
-  const preSelected = null;
+  const preSelected = selected ? [`${selected.id}`] : null;
 
   const handleItemClick = ({ key }) => selectItem(parseInt(key, 10));
 
