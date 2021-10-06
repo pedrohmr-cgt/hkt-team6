@@ -1,0 +1,11 @@
+.home {
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .ant-spin-dot-item {
+      background-color: var(--primary-color) !important;
+    }
+  }
+}

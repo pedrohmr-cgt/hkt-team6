@@ -2,6 +2,10 @@
   background: var(--secondary-color) !important;
   padding-top: 1rem;
 
+  &__loading {
+    padding: 0 1rem;
+  }
+
   .ant-menu-dark {
     background: var(--secondary-color) !important;
 

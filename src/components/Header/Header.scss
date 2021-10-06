@@ -1,8 +1,10 @@
 .header {
   background: transparent !important;
+  padding: 0 1rem !important;
+  text-align: left;
 
   &__logo {
-    height: 80%;
+    height: 60%;
     pointer-events: none;
   }
 }

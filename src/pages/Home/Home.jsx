@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Layout, Spin } from 'antd';
 
 import Sider from '../../components/Sider';
 import { GroupContextProvider } from '../../context/group';
@@ -12,7 +12,9 @@ const Home = () => {
     <GroupContextProvider>
       <Layout>
         <Sider />
-        <Content>Home</Content>
+        <Content className="home__content">
+          <Spin size="large" />
+        </Content>
       </Layout>
     </GroupContextProvider>
   );
