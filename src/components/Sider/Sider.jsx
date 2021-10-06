@@ -18,19 +18,23 @@ const Sider = () => {
   const [groups, selected, selectItem] = useContext(GroupContext);
 
   const loading = !groups || !selected;
-  const preSelected = selected ? [`group-${selected.id}`] : null;
+  // const preSelected = selected ? [`group-${selected.id}`] : null;
+  const preSelected = null;
 
-  const handleItemClick = id => selectItem(id);
+  const handleItemClick = ({ key }) => selectItem(parseInt(key, 10));
 
   return (
     <LytSider className="sider">
       {loading && renderLoading()}
       {!loading && (
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={preSelected}>
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={preSelected}
+          onClick={handleItemClick}
+        >
           {groups.map(({ name, id }) => (
-            <Menu.Item key={`group-${id}`} onClick={() => handleItemClick(id)}>
-              {name}
-            </Menu.Item>
+            <Menu.Item key={id}>{name}</Menu.Item>
           ))}
         </Menu>
       )}

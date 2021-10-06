@@ -8,15 +8,6 @@ import { gsap } from 'gsap';
 import { GroupContext } from '../../context/group';
 import './TDViewer.scss';
 
-// Helpers
-// const center = (group, scene) => {
-//   new THREE.Box3()
-//     .setFromObject(group)
-//     .getCenter(group.position)
-//     .multiplyScalar(-1);
-//   scene.add(group);
-// };
-
 const degreesToRadians = degrees => {
   return degrees * (Math.PI / 180);
 };
@@ -33,7 +24,7 @@ const random = (min, max, float = false) => {
 
 // Figure
 class Figure {
-  constructor(params, scene) {
+  constructor(params, face, scene) {
     this.params = {
       x: 0,
       y: 0,
@@ -55,9 +46,32 @@ class Figure {
     this.headHue = random(0, 360);
     this.bodyHue = random(0, 360);
     this.headLightness = random(40, 65);
-    this.headMaterial = new THREE.MeshLambertMaterial({
-      color: `hsl(${this.headHue}, 30%, ${this.headLightness}%)`,
-    });
+    const texture = THREE.ImageUtils.loadTexture(face);
+    const cubeMaterial = [
+      new THREE.MeshBasicMaterial({
+        map: texture,
+        color: `hsl(${this.headHue}, 30%, ${this.headLightness}%)`, // left
+      }),
+      new THREE.MeshBasicMaterial({
+        map: texture,
+        color: `hsl(${this.headHue}, 30%, ${this.headLightness}%)`, // right
+      }),
+      new THREE.MeshBasicMaterial({
+        color: `hsl(${this.headHue}, 30%, ${this.headLightness}%)`, // top
+      }),
+      new THREE.MeshBasicMaterial({
+        color: `hsl(${this.headHue}, 30%, ${this.headLightness}%)`, // bottom
+      }),
+      new THREE.MeshBasicMaterial({
+        map: texture,
+        color: `hsl(${this.headHue}, 30%, ${this.headLightness}%)`, // front
+      }),
+      new THREE.MeshBasicMaterial({
+        map: texture,
+        color: `hsl(${this.headHue}, 30%, ${this.headLightness}%)`, // back
+      }),
+    ];
+    this.headMaterial = cubeMaterial;
     this.bodyMaterial = new THREE.MeshLambertMaterial({
       color: `hsl(${this.bodyHue}, 85%, 50%)`,
     });
@@ -92,7 +106,7 @@ class Figure {
     this.head.position.y = 1.65;
 
     // Add the eyes
-    this.createEyes();
+    // this.createEyes();
   }
 
   createArms() {
@@ -101,7 +115,7 @@ class Figure {
     for (let i = 0; i < 2; i++) {
       const armGroup = new THREE.Group();
       const geometry = new THREE.BoxGeometry(0.25, height, 0.25);
-      const arm = new THREE.Mesh(geometry, this.headMaterial);
+      const arm = new THREE.Mesh(geometry, this.bodyMaterial);
       const m = i % 2 === 0 ? 1 : -1;
 
       // Add arm to group
@@ -149,7 +163,7 @@ class Figure {
     const geometry = new THREE.BoxGeometry(0.25, 0.4, 0.25);
 
     for (let i = 0; i < 2; i++) {
-      const leg = new THREE.Mesh(geometry, this.headMaterial);
+      const leg = new THREE.Mesh(geometry, this.bodyMaterial);
       const m = i % 2 === 0 ? 1 : -1;
 
       legs.add(leg);
@@ -188,107 +202,112 @@ const renderLoading = () => {
 };
 
 const TDViewer = () => {
-  const [groups] = useContext(GroupContext);
+  const [groups, selected] = useContext(GroupContext);
+
+  const loading = !groups || !selected;
 
   const viewer = useRef(null);
   const wrapper = useRef(null);
 
   useEffect(() => {
-    // const { clientWidth, clientHeight } = wrapper.current;
-    const { clientWidth, clientHeight } = {
-      clientWidth: 1000,
-      clientHeight: 500,
-    };
+    if (selected) {
+      const { clientWidth, clientHeight } = wrapper.current;
+      const canvas = viewer.current;
 
-    const scene = new THREE.Scene();
+      const scene = new THREE.Scene();
 
-    const sizes = {
-      width: clientWidth,
-      height: clientHeight,
-    };
+      const sizes = {
+        width: clientWidth,
+        height: clientHeight,
+      };
 
-    // Camera
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      sizes.width / sizes.height,
-      0.1,
-      1000
-    );
-    camera.position.z = 5;
-    scene.add(camera);
+      // Camera
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        sizes.width / sizes.height,
+        0.1,
+        1000
+      );
+      camera.position.z = 5;
+      scene.add(camera);
 
-    /**
-     * Renderer
-     */
-    const renderer = new THREE.WebGLRenderer();
+      /**
+       * Renderer
+       */
+      const renderer = new THREE.WebGLRenderer();
 
-    const render = () => {
-      renderer.setSize(sizes.width, sizes.height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.render(scene, camera);
-    };
+      const render = () => {
+        renderer.setSize(sizes.width, sizes.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.render(scene, camera);
+      };
 
-    // window.addEventListener('resize', () => {
-    //   // Update sizes
-    //   sizes.width = window.innerWidth;
-    //   sizes.height = window.innerHeight;
+      // window.addEventListener('resize', () => {
+      //   // Update sizes
+      //   sizes.width = window.innerWidth;
+      //   sizes.height = window.innerHeight;
 
-    //   // Update camera
-    //   camera.aspect = sizes.width / sizes.height;
-    //   camera.updateProjectionMatrix();
-    // });
+      //   // Update camera
+      //   camera.aspect = sizes.width / sizes.height;
+      //   camera.updateProjectionMatrix();
+      // });
 
-    // Lighting
-    const lightAmbient = new THREE.AmbientLight(0x9eaeff, 0.5);
-    scene.add(lightAmbient);
+      // Lighting
+      const lightAmbient = new THREE.AmbientLight(0x9eaeff, 0.5);
+      scene.add(lightAmbient);
 
-    const lightDirectional = new THREE.DirectionalLight(0xffffff, 0.8);
-    scene.add(lightDirectional);
+      const lightDirectional = new THREE.DirectionalLight(0xffffff, 0.8);
+      scene.add(lightDirectional);
 
-    // Move the light source towards us
-    lightDirectional.position.set(5, 5, 5);
+      // Move the light source towards us
+      lightDirectional.position.set(5, 5, 5);
 
-    const addFigure = params => {
-      const figure = new Figure(params, scene);
-      figure.init();
+      const addFigure = (params, imageUrl) => {
+        const figure = new Figure(params, imageUrl, scene);
+        figure.init();
 
-      gsap.set(figure.params, {
-        y: -1.5,
-      });
+        gsap.set(figure.params, {
+          y: -1.5,
+        });
 
-      gsap.to(figure.params, {
-        ry: degreesToRadians(360),
-        repeat: -1,
-        duration: 20,
-      });
+        gsap.to(figure.params, {
+          ry: degreesToRadians(360),
+          repeat: -1,
+          duration: 20,
+        });
 
-      gsap.to(figure.params, {
-        y: 0,
-        armRotation: degreesToRadians(90),
-        repeat: -1,
-        yoyo: true,
-        duration: 0.5,
-      });
+        gsap.to(figure.params, {
+          y: 0,
+          armRotation: degreesToRadians(90),
+          repeat: -1,
+          yoyo: true,
+          duration: 0.5,
+        });
 
-      gsap.ticker.add(() => {
-        figure.bounce();
-        render();
-      });
-    };
+        gsap.ticker.add(() => {
+          figure.bounce();
+          render();
+        });
+      };
 
-    addFigure({ x: -5 });
-    addFigure({ x: -1 });
-    addFigure({ x: 2 });
-    addFigure({ x: 5 });
+      const { members } = selected;
 
-    viewer.current.appendChild(renderer.domElement);
-  }, []);
+      const positions = [-5, -1, 2, 5];
+      members.map(({ image_url: imageUrl }, i) =>
+        addFigure({ x: positions[i], ry: random(-50, 50) }, imageUrl)
+      );
+
+      while (canvas.firstChild) {
+        canvas.removeChild(canvas.firstChild);
+      }
+      canvas.appendChild(renderer.domElement);
+    }
+  }, [selected]);
 
   return (
     <div className="tdviewer" ref={wrapper}>
-      {/* {!groups && renderLoading()}
-      {groups && <div ref={viewer} />} */}
-      <div ref={viewer} />
+      {loading && renderLoading()}
+      {!loading && <div ref={viewer} />}
     </div>
   );
 };
