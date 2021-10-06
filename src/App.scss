@@ -1,7 +1,13 @@
 @import '~antd/dist/antd.css';
+// @import '~antd/lib/style/themes/default.less';
 
-.App {
+:root {
+  --primary-color: #2baf9f;
+  --secondary-color: #1b1c1f;
+}
+
+.app {
   height: 100vh;
   text-align: center;
-  background: #2baf9f;
+  background: var(--primary-color);
 }

@@ -1,0 +1,8 @@
+.header {
+  background: transparent !important;
+
+  &__logo {
+    height: 80%;
+    pointer-events: none;
+  }
+}
