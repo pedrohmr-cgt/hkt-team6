@@ -15,19 +15,25 @@ const renderLoading = () => {
 };
 
 const Sider = () => {
-  const [groups] = useContext(GroupContext);
+  const [groups, selected, selectItem] = useContext(GroupContext);
 
-  const preSelected = groups ? [`group-${groups[0].id}`] : null; // FIXME
+  const loading = !groups || !selected;
+  const preSelected = selected ? [`group-${selected.id}`] : null;
+
+  const handleItemClick = id => selectItem(id);
 
   return (
     <LytSider className="sider">
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={preSelected}>
-        {!groups && renderLoading()}
-        {groups &&
-          groups.map(({ name, id }) => (
-            <Menu.Item key={`group-${id}`}>{name}</Menu.Item>
+      {loading && renderLoading()}
+      {!loading && (
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={preSelected}>
+          {groups.map(({ name, id }) => (
+            <Menu.Item key={`group-${id}`} onClick={() => handleItemClick(id)}>
+              {name}
+            </Menu.Item>
           ))}
-      </Menu>
+        </Menu>
+      )}
     </LytSider>
   );
 };

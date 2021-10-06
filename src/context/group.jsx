@@ -12,14 +12,20 @@ const mockData = [
 ];
 
 export const GroupContextProvider = ({ children }) => {
-  const [groups, setGroups] = useState(mockData);
+  const [groups, setGroups] = useState(null);
+  const [selected, setSelected] = useState(null);
 
-  // setTimeout(() => {
-  //   setGroups(mockData);
-  // }, 3000);
+  setTimeout(() => {
+    setGroups(mockData);
+    setSelected(mockData[0]);
+  }, 1000);
+
+  const selectItem = id => {
+    setSelected(groups.find(group => group.id === id));
+  };
 
   return (
-    <GroupContext.Provider value={[groups, setGroups]}>
+    <GroupContext.Provider value={[groups, selected, selectItem]}>
       {children}
     </GroupContext.Provider>
   );

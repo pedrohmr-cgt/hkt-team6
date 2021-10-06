@@ -50,8 +50,6 @@ class Figure {
     this.group.position.x = this.params.x;
     this.group.position.y = this.params.y;
     this.group.position.z = this.params.z;
-    // this.group.rotation.y = this.params.ry
-    // this.group.scale.set(5, 5, 5)
 
     // Material
     this.headHue = random(0, 360);
@@ -198,12 +196,9 @@ const TDViewer = () => {
   useEffect(() => {
     // const { clientWidth, clientHeight } = wrapper.current;
     const { clientWidth, clientHeight } = {
-      clientWidth: 700,
-      clientHeight: 600,
+      clientWidth: 1000,
+      clientHeight: 500,
     };
-    // const renderer = new THREE.WebGLRenderer();
-    // renderer.setSize(clientWidth, clientHeight);
-    // viewer.current.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
 
@@ -233,18 +228,15 @@ const TDViewer = () => {
       renderer.render(scene, camera);
     };
 
-    window.addEventListener('resize', () => {
-      // Update sizes
-      sizes.width = window.innerWidth;
-      sizes.height = window.innerHeight;
+    // window.addEventListener('resize', () => {
+    //   // Update sizes
+    //   sizes.width = window.innerWidth;
+    //   sizes.height = window.innerHeight;
 
-      // Update camera
-      camera.aspect = sizes.width / sizes.height;
-      camera.updateProjectionMatrix();
-    });
-
-    // Material
-    const material = new THREE.MeshLambertMaterial({ color: 0xffffff });
+    //   // Update camera
+    //   camera.aspect = sizes.width / sizes.height;
+    //   camera.updateProjectionMatrix();
+    // });
 
     // Lighting
     const lightAmbient = new THREE.AmbientLight(0x9eaeff, 0.5);
@@ -256,63 +248,47 @@ const TDViewer = () => {
     // Move the light source towards us
     lightDirectional.position.set(5, 5, 5);
 
-    const figure = new Figure({}, scene);
-    figure.init();
+    const addFigure = params => {
+      const figure = new Figure(params, scene);
+      figure.init();
 
-    gsap.set(figure.params, {
-      y: -1.5,
-    });
+      gsap.set(figure.params, {
+        y: -1.5,
+      });
 
-    gsap.to(figure.params, {
-      ry: degreesToRadians(360),
-      repeat: -1,
-      duration: 20,
-    });
+      gsap.to(figure.params, {
+        ry: degreesToRadians(360),
+        repeat: -1,
+        duration: 20,
+      });
 
-    gsap.to(figure.params, {
-      y: 0,
-      armRotation: degreesToRadians(90),
-      repeat: -1,
-      yoyo: true,
-      duration: 0.5,
-    });
+      gsap.to(figure.params, {
+        y: 0,
+        armRotation: degreesToRadians(90),
+        repeat: -1,
+        yoyo: true,
+        duration: 0.5,
+      });
 
-    gsap.ticker.add(() => {
-      figure.bounce();
-      render();
-    });
+      gsap.ticker.add(() => {
+        figure.bounce();
+        render();
+      });
+    };
+
+    addFigure({ x: -5 });
+    addFigure({ x: -1 });
+    addFigure({ x: 2 });
+    addFigure({ x: 5 });
 
     viewer.current.appendChild(renderer.domElement);
-
-    // console.log(clientWidth, clientHeight);
-    // const scene = new THREE.Scene();
-    // const camera = new THREE.PerspectiveCamera(
-    //   75,
-    //   clientWidth / clientHeight,
-    //   0.1,
-    //   1000
-    // );
-    // const renderer = new THREE.WebGLRenderer();
-    // renderer.setSize(clientWidth, clientHeight);
-    // viewer.current.appendChild(renderer.domElement);
-    // const geometry = new THREE.BoxGeometry(1, 1, 1);
-    // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    // const cube = new THREE.Mesh(geometry, material);
-    // scene.add(cube);
-    // camera.position.z = 5;
-    // const animate = function () {
-    //   requestAnimationFrame(animate);
-    //   cube.rotation.x += 0.01;
-    //   cube.rotation.y += 0.01;
-    //   renderer.render(scene, camera);
-    // };
-    // animate();
   }, []);
 
   return (
     <div className="tdviewer" ref={wrapper}>
-      {!groups && renderLoading()}
-      {groups && <div ref={viewer} />}
+      {/* {!groups && renderLoading()}
+      {groups && <div ref={viewer} />} */}
+      <div ref={viewer} />
     </div>
   );
 };
