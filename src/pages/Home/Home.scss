@@ -1,11 +1,5 @@
-.home {
-  &__content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .ant-spin-dot-item {
-      background-color: var(--primary-color) !important;
-    }
-  }
+.tdviewer {
+    width: 100%;
+    height: 100%;
+    background: black;
 }
