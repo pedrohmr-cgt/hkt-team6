@@ -1,24 +1,7 @@
+@import '~antd/dist/antd.css';
+
 .App {
   height: 100vh;
   text-align: center;
   background: #2baf9f;
-}
-
-.App-logo {
-  height: 80%;
-  pointer-events: none;
-}
-
-
-.App-header {
-  height: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
 }
