@@ -1,23 +1,26 @@
 {
   "files": {
-    "main.css": "/hkt-team6/static/css/main.8473c044.chunk.css",
-    "main.js": "/hkt-team6/static/js/main.200e18ae.chunk.js",
-    "main.js.map": "/hkt-team6/static/js/main.200e18ae.chunk.js.map",
-    "runtime-main.js": "/hkt-team6/static/js/runtime-main.715013c8.js",
-    "runtime-main.js.map": "/hkt-team6/static/js/runtime-main.715013c8.js.map",
-    "static/js/2.e00eb602.chunk.js": "/hkt-team6/static/js/2.e00eb602.chunk.js",
-    "static/js/2.e00eb602.chunk.js.map": "/hkt-team6/static/js/2.e00eb602.chunk.js.map",
-    "static/js/3.cfdd103a.chunk.js": "/hkt-team6/static/js/3.cfdd103a.chunk.js",
-    "static/js/3.cfdd103a.chunk.js.map": "/hkt-team6/static/js/3.cfdd103a.chunk.js.map",
+    "main.css": "/hkt-team6/static/css/main.8831e798.chunk.css",
+    "main.js": "/hkt-team6/static/js/main.bf7f3b18.chunk.js",
+    "main.js.map": "/hkt-team6/static/js/main.bf7f3b18.chunk.js.map",
+    "runtime-main.js": "/hkt-team6/static/js/runtime-main.d3fd5957.js",
+    "runtime-main.js.map": "/hkt-team6/static/js/runtime-main.d3fd5957.js.map",
+    "static/css/2.54a01395.chunk.css": "/hkt-team6/static/css/2.54a01395.chunk.css",
+    "static/js/2.9ab980c4.chunk.js": "/hkt-team6/static/js/2.9ab980c4.chunk.js",
+    "static/js/2.9ab980c4.chunk.js.map": "/hkt-team6/static/js/2.9ab980c4.chunk.js.map",
+    "static/js/3.3986a3f1.chunk.js": "/hkt-team6/static/js/3.3986a3f1.chunk.js",
+    "static/js/3.3986a3f1.chunk.js.map": "/hkt-team6/static/js/3.3986a3f1.chunk.js.map",
     "index.html": "/hkt-team6/index.html",
-    "static/css/main.8473c044.chunk.css.map": "/hkt-team6/static/css/main.8473c044.chunk.css.map",
-    "static/js/2.e00eb602.chunk.js.LICENSE.txt": "/hkt-team6/static/js/2.e00eb602.chunk.js.LICENSE.txt",
+    "static/css/2.54a01395.chunk.css.map": "/hkt-team6/static/css/2.54a01395.chunk.css.map",
+    "static/css/main.8831e798.chunk.css.map": "/hkt-team6/static/css/main.8831e798.chunk.css.map",
+    "static/js/2.9ab980c4.chunk.js.LICENSE.txt": "/hkt-team6/static/js/2.9ab980c4.chunk.js.LICENSE.txt",
     "static/media/logo.22556bc0.svg": "/hkt-team6/static/media/logo.22556bc0.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.715013c8.js",
-    "static/js/2.e00eb602.chunk.js",
-    "static/css/main.8473c044.chunk.css",
-    "static/js/main.200e18ae.chunk.js"
+    "static/js/runtime-main.d3fd5957.js",
+    "static/css/2.54a01395.chunk.css",
+    "static/js/2.9ab980c4.chunk.js",
+    "static/css/main.8831e798.chunk.css",
+    "static/js/main.bf7f3b18.chunk.js"
   ]
 }
